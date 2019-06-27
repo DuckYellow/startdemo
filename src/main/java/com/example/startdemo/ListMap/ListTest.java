@@ -1,15 +1,17 @@
 package com.example.startdemo.ListMap;
 
+import com.google.common.base.Joiner;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ListTest {
 
     public static void main(String[] args) {
-        List<Long> list=new ArrayList<>();
-        list.add(1L);
-        list.add(2L);
-        System.out.println(list.toString());
+        List<Long> list=Arrays.asList(1L,2L);
+
+        String res=Joiner.on(",").join(list);
+        System.out.println(res);
 
     }
 
