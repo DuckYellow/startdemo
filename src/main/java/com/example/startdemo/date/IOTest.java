@@ -1,4 +1,4 @@
-package com.example.startdemo;
+package com.example.startdemo.date;
 
 import java.io.*;
 import java.util.*;
@@ -9,6 +9,33 @@ import java.util.*;
  */
 public class IOTest {
     public static void main(String[] args) {
+        File apolloFile1 = new File("/Users/xuweihang/Downloads/long_text_2019-08-01-16-52-42.txt");
+        List<String> keyList = readFile(apolloFile1);
+        System.out.println(keyList.size());
+
+        File apolloFile2 = new File("/Users/xuweihang/Downloads/long_text_2019-08-01-16-52-56.txt");
+        List<String> keyList2 = readFile(apolloFile2);
+        Set<String> a=new HashSet<>(keyList2);
+        System.out.println(keyList2.size());
+
+        for (String s : keyList) {
+            if (!a.contains(s)){
+                System.out.println(s);
+            }
+        }
+
+
+//        File apolloFile2 = new File("/Users/xuweihang/Downloads/long_text_2019-07-15-18-17-48.txt");
+//        List<String> keyList2 = readFile(apolloFile2);
+//        System.out.println(keyList2.size());
+//        for (String s : keyList2) {
+//            if (!set.contains(s)) {
+//                System.out.println(s);
+//            }
+//        }
+    }
+
+    public static void matchProject(String[] args) {
         File apolloFile = new File("/Users/xuweihang/Downloads/webserPt2");
         List<String> keyList = readFile(apolloFile);
         System.out.println("keyList=" + keyList.size());

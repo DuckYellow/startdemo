@@ -8,14 +8,14 @@ import java.util.stream.Collectors;
 public class ListTest {
 
     public static void main(String[] args) {
-        List<Long> list=Arrays.asList(1L,2L);
-
-        String res=Joiner.on(",").join(list);
-        System.out.println(res);
-
+        //sort();
+        Set<Long> a = new HashSet<>(new ArrayList<>());
+        if(a.contains(null)){
+            System.out.println();
+        }
     }
 
-    private void sort() {
+    private static void sort() {
 
         List<Student> studentList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -30,14 +30,11 @@ public class ListTest {
         studentList.sort((a, b) -> {
             if (a.getId() < b.getId()) {
                 return -1;
-
             }
             return 1;
         });
-        Set<Integer> set = studentList.stream().map(Student::getId).collect(Collectors.toSet());
-        System.out.println(set.size());
         for (Student student1 : studentList) {
-            System.out.println(student1.getId());
+            System.out.println("res=" + student1.getId());
         }
     }
 
