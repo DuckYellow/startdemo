@@ -11,7 +11,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author blithe
@@ -23,13 +25,24 @@ import java.util.Map;
 public class RestTemplateTest {
 
     public static void main(String[] args) {
-        test1();
+
+    }
+
+    public static String getRandomString(int length) {
+        String str = "zxcvbnmlkjhgfdsaqwertyuiopQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; ++i) {
+            int number = random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
     }
 
     public static void test1() {
         //访问地址
         //String url = "http://47.254.135.205/finance/querySupplierBill";
-        String url="http://47.254.135.205/finance/getSupplierBillDetail";
+        String url = "http://47.254.135.205/finance/getSupplierBillDetail";
         //用户账号
         String username = "kikuu_coralglobal";
         //用户密码
@@ -53,6 +66,4 @@ public class RestTemplateTest {
         ResponseEntity<String> response = client.postForEntity(url, formEntity, String.class);
         System.out.println(response.getBody());
     }
-
-
 }

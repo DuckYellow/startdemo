@@ -8,11 +8,11 @@ import java.util.stream.Collectors;
 public class ListTest {
 
     public static void main(String[] args) {
-        //sort();
-        Set<Long> a = new HashSet<>(new ArrayList<>());
-        if(a.contains(null)){
-            System.out.println();
-        }
+        testB();
+//        Set<Long> a = new HashSet<>(new ArrayList<>());
+//        if(a.contains(null)){
+//            System.out.println();
+//        }
     }
 
     private static void sort() {
@@ -53,19 +53,14 @@ public class ListTest {
         return a;
     }
 
-    private void testB() {
+    private static void testB() {
         List<Integer> list = new ArrayList();
-        list.add(2);
-        list.add(1);
-        list.add(3);
-        list.add(3);
-        list.sort((a, b) -> {
-            if (a < b) {
-                return -1;
 
-            }
-            return 1;
-        });
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list=list.subList(0,2);
 
         for (Integer integer : list) {
             System.out.println(integer);
