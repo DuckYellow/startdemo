@@ -139,7 +139,12 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.8</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>btime</groupId>
+            <artifactId>common-util</artifactId>
+            <version>2.1.6</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

@@ -25,7 +25,7 @@ import java.util.Random;
 public class RestTemplateTest {
 
     public static void main(String[] args) {
-
+        test1();
     }
 
     public static String getRandomString(int length) {
@@ -41,29 +41,14 @@ public class RestTemplateTest {
 
     public static void test1() {
         //访问地址
-        //String url = "http://47.254.135.205/finance/querySupplierBill";
-        String url = "http://47.254.135.205/finance/getSupplierBillDetail";
-        //用户账号
-        String username = "kikuu_coralglobal";
-        //用户密码
-        String password = "KiKUU_29831";
-        //系统当前时间(yyyy-MM-dd HH:mm:ss)
-        String currentTime = "2019-01-04 20:00:00";
-        //MD5生成规则 （系统当前时间+用户密码）
-        String abstractMD5 = Hashing.md5().newHasher().putString(currentTime + password, Charsets.UTF_8).hash().toString();
-        // String abstractMD6 = Hashing.sha1().newHasher().putString(currentTime,password).hash().toString();
+        String url = "http://192.168.5.5:8013/api/xiaoban-content-process/Extract_Info?msg=想听国学三字经";
         RestTemplate client = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        headers.set("username", username);
-        headers.set("currentTime", currentTime);
-        headers.set("abstractMD5", abstractMD5);
         Map<String, String> params = Maps.newHashMap();
-        params.put("BatchNo", "201812161231047580000");
-        params.put("billConfirmBySupplierStartTime", "2019-01-01 11:44:30");
-        params.put("billConfirmBySupplierEndTime", "2019-01-04 11:44:30");
+        params.put("msg", "想听国学三字经");
         HttpEntity<String> formEntity = new HttpEntity<>(new Gson().toJson(params), headers);
-        ResponseEntity<String> response = client.postForEntity(url, formEntity, String.class);
+        ResponseEntity<String> response = client.getForEntity(url, String.class);
         System.out.println(response.getBody());
     }
 }
