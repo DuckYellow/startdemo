@@ -4,10 +4,7 @@ import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -15,10 +12,7 @@ import java.util.stream.Collectors;
  * @date 2019-08-13 20:41
  */
 public class TempTest {
-    public static void main(String[] args) {
-        String a = "[]";
 
-    }
 
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode dummyHead = new ListNode(0);
@@ -38,6 +32,23 @@ public class TempTest {
         return dummyHead.next;
     }
 
+
+    public boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+        Set<Integer> set = new HashSet<>();
+
+        while (head.next != null) {
+            head = head.next;
+            if (set.contains(head.val)) {
+                return true;
+            }
+            set.add(head.val);
+        }
+        return false;
+    }
+
     public class ListNode {
         int val;
         ListNode next;
@@ -45,5 +56,58 @@ public class TempTest {
         ListNode(int x) {
             val = x;
         }
+    }
+
+    public static void main(String[] args) {
+
+    }
+
+    public int trailingZeroes(int n) {
+        return 0;
+    }
+
+    public int majorityElement(int[] nums) {
+        int majorityCount = nums.length / 2;
+
+        for (int num : nums) {
+            int count = 0;
+            for (int elem : nums) {
+                if (elem == num) {
+                    count += 1;
+                }
+            }
+
+            if (count > majorityCount) {
+                return num;
+            }
+
+        }
+
+        return -1;
+    }
+
+    public static int[] twoSum(int[] numbers, int target) {
+        int[] res = new int[2];
+
+        HashSet<Integer> set = new HashSet();
+        for (int number : numbers) {
+            set.add(number);
+        }
+
+        for (int i = 0; i < numbers.length; i++) {
+            int number = numbers[i];
+            if (set.contains(target - number)) {
+                res[0] = i + 1;
+                int b = target - number;
+                for (int i1 = i + 1; i1 < numbers.length; i1++) {
+                    if (b == numbers[i1]) {
+                        res[1] = i1 + 1;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        return res;
     }
 }

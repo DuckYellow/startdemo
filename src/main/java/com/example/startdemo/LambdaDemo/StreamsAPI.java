@@ -54,11 +54,16 @@ public class StreamsAPI {
         Stream<String> stream2 = Stream.of("I", "love", "you", "too");
         Integer lengthSum = stream2.reduce(0, (sum, str) -> sum + str.length(), (a, b) -> a + b);
         System.out.println(lengthSum);
+
+        Stream<Integer> stream3 = Stream.of(2, 2, 2);
+        int product = stream3.reduce(1, (a, b) -> a * b);
     }
 
     public static void collect() {
         Stream<String> stream = Stream.of("I", "love", "you", "too");
         List<String> list = stream.collect(Collectors.toList()); // (1)
+        list.add("a");
+        list.stream().forEach(a -> System.out.println(a));
         ArrayList<String> arrayList = stream.collect(Collectors.toCollection(ArrayList::new));// (3)
         HashSet<String> hashSet = stream.collect(Collectors.toCollection(HashSet::new));// (4)
         for (String s : list) {
@@ -72,6 +77,10 @@ public class StreamsAPI {
         Stream<String> stream2 = Stream.of("I", "love", "you");
         String joined = stream2.collect(Collectors.joining(",", "{", "}"));// "{I,love,you}"
         System.out.println(joined);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("a", "a");
+        list.stream().filter(a -> map.containsKey(a));
     }
 
 }
