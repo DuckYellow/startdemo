@@ -8,7 +8,7 @@ import java.util.*;
 
 public class RemoterMapRegister implements RemoteRegister {
     private Map<String, List<URL>> registerMap = new HashMap<String, List<URL>>(1024);
-    public static final String path = "/data/register";
+    public static final String path = "/Users/xuweihang/Downloads/data/register";
 
     @Override
     public void register(String interfaceName, URL host) {

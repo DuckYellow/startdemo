@@ -18,6 +18,7 @@ public class NettyClient {
         try {
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(group).channel(NioSocketChannel.class).handler(new NettyClientChannelInitializer(new NettyClientListener() {
+                @Override
                 public void channelRead(ChannelHandlerContext ctx, Object message) {
                     result[0] = message;
                     latch.countDown();
