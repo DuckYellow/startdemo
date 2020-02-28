@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ZookeeperClient {
     private CuratorFramework client;
-    private static String zkServerIps = "127.0.0.1:4180,127.0.0.1:4182,127.0.0.1:4181";
+    private static String zkServerIps = "127.0.0.1:2181";
     private Builder builder;
 
     public Builder custom() {
