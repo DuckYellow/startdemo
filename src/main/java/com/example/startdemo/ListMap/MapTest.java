@@ -1,20 +1,22 @@
 package com.example.startdemo.ListMap;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import com.google.gson.Gson;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class MapTest {
+
+    private static Gson gson = new Gson();
     public static void main(String[] args) {
         Map a = new HashMap();
-        a.put(1,1);
+        a.put(1, 1);
 
         Map b = new ConcurrentHashMap();
-        b.put(1,1);
+        b.put(1, 1);
         b.get(1);
-        Set<String> seta=new HashSet();
+        Set<String> seta = new HashSet();
         seta.add("a");
 
         getOrDefault();
@@ -24,7 +26,7 @@ public class MapTest {
         // Java7以及之前迭代Map
         HashMap<Integer, String> map = new HashMap<>();
         map.put(1, "one");
-        map.putIfAbsent(1,"one");
+        map.putIfAbsent(1, "one");
         map.put(2, "two");
         map.put(3, "three");
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
@@ -50,7 +52,34 @@ public class MapTest {
         } else {
             System.out.println("NoValue");
         }
-    // Java8使用Map.getOrDefault()
+        // Java8使用Map.getOrDefault()
         System.out.println(map.getOrDefault(4, "NoValue")); // 2
+    }
+
+    public void allMap() {
+        HashMap<String, Integer> hashMap = new HashMap();
+        hashMap.put("b", 0);
+        hashMap.put("a", 0);
+        hashMap.put("c", 0);
+        System.out.println(gson.toJson(hashMap));
+
+        ConcurrentSkipListMap<String, Integer> skipListMap = new ConcurrentSkipListMap();
+        skipListMap.put("b", 0);
+        skipListMap.put("a", 0);
+        skipListMap.put("c", 0);
+        System.out.println(gson.toJson(skipListMap));
+
+        TreeMap<String, Integer> treeMap = new TreeMap();
+        treeMap.put("key_1", 1);
+        treeMap.put("key_2", 2);
+        treeMap.put("key_3", 3);
+        System.out.println(gson.toJson(treeMap));
+
+
+        LinkedHashMap<String, Integer> linkedHashMap = new LinkedHashMap();
+        linkedHashMap.put("b", 0);
+        linkedHashMap.put("a", 0);
+        linkedHashMap.put("c", 0);
+        System.out.println(gson.toJson(linkedHashMap));
     }
 }

@@ -1,9 +1,15 @@
 package com.example.startdemo.sentinel;
 
+import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author xuweihang@qbb.com
@@ -12,11 +18,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class SentinelController {
 
+    private static Gson gson = new Gson();
 
     @RequestMapping(value = "sentinel/test", method = RequestMethod.GET)
     @ResponseBody
     @Sentinel
-    private String test() {
+    public String test() {
         return "aaaa";
+    }
+
+    public static void main(String[] args) {
+
     }
 }
