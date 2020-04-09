@@ -1,9 +1,5 @@
 package com.example.startdemo.leetcode;
 
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
-
 import java.util.*;
 
 /**
@@ -23,15 +19,6 @@ public class Solution {
             curr = curr.next;
         }
         return sentinel.next;
-    }
-
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-        }
     }
 
     public int countPrimes(int n) {
@@ -352,13 +339,97 @@ public class Solution {
         return res.get(res.size() - 1);
     }
 
-    public static void main(String[] args) {
-        int[] shuzu = new int[4];
+    public int pathSum(TreeNode root, int sum) {
+        if (root == null) {
+            return 0;
+        }
 
-        shuzu[0] = 2;
-        shuzu[1] = 2;
-        shuzu[2] = 3;
-        shuzu[3] = 1;
-        System.out.println(thirdMax(shuzu));
+        if (sum == root.val) {
+            return 1 + pathSum(root.left, sum) + pathSum(root.right, sum)
+                           + pathSumHas(root.left, sum - root.val) + pathSumHas(root.right, sum - root.val);
+        } else {
+            return pathSum(root.left, sum) + pathSum(root.right, sum)
+                           + pathSumHas(root.left, sum - root.val) + pathSumHas(root.right, sum - root.val);
+        }
+
+    }
+
+    int pathSumHas(TreeNode root, int sum) {
+        if (root == null) {
+            return 0;
+        }
+        if (sum == root.val) {
+            return 1 + pathSumHas(root.left, sum - root.val) + pathSumHas(root.right, sum - root.val);
+        } else {
+            return pathSumHas(root.left, sum - root.val) + pathSumHas(root.right, sum - root.val);
+        }
+    }
+
+    public static int arrangeCoins(int n) {
+//        int res = 0;
+//        int shengxia = n;
+//        for (int i = 1; i <= n; i++) {
+//            if (i <= shengxia) {
+//                res++;
+//                shengxia = shengxia - i;
+//            }else{
+//                break;
+//            }
+//        }
+//        return res;
+
+        return (int) ((-1 + Math.sqrt(1 + 8 * (long) n)) / 2);
+    }
+
+    public static char[] compress(char[] chars) {
+        if (chars == null || chars.length <= 0) {
+            return null;
+        }
+        char[] returnRes = new char[chars.length];
+        int res = 0;
+        int num = 1;
+        char temp = " ".charAt(0);
+        for (int i = 0; i < chars.length; i++) {
+            char dangqian = chars[i];
+            if (dangqian == temp) {
+                num++;
+            } else {
+                if (num == 1) {
+                    returnRes[res] = dangqian;
+                    res += 1;
+
+                } else {
+                    char[] a = String.valueOf(num).toCharArray();
+                    for (int j = 0; j < a.length; j++) {
+                        returnRes[res + j] = a[j];
+                    }
+                    res += a.length;
+                    num = 1;
+
+                    returnRes[res] = dangqian;
+                    res += 1;
+                }
+                temp = dangqian;
+            }
+        }
+
+        if (num != 1) {
+            char[] a = String.valueOf(num).toCharArray();
+            for (int j = 0; j < a.length; j++) {
+                returnRes[res + j] = a[j];
+            }
+            res += a.length;
+        }
+
+        char[] returnRes2 = new char[res];
+        for (int i = 0; i < res; i++) {
+            returnRes2[i] = returnRes[i];
+        }
+
+        return returnRes2;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(compress("abbbccc".toCharArray()));
     }
 }
