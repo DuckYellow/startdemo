@@ -99,6 +99,13 @@ public class Solution2 {
     }
 
     public static void main(String[] args) {
-
+        List<String> listA = new ArrayList<String>();
+        List<String> listB = new ArrayList<String>();
+        listA.add("A");
+        listA.add("B");
+        listB.add("B");
+        listB.add("C");
+        listA.retainAll(listB);
+        System.out.println(listA);
     }
 }
