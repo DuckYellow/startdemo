@@ -1,11 +1,7 @@
 package com.example.startdemo;
 
-import sun.misc.BASE64Encoder;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * HasStatic
@@ -17,5 +13,8 @@ public class HasStatic {
     private static final String KEY = "";
     private static int x = 100;
 
-
+    public static void main(String[] args) {
+        BigDecimal splitPrice = new BigDecimal("1601").divide(new BigDecimal(3), 0, RoundingMode.FLOOR);
+        System.out.println(splitPrice);
+    }
 }

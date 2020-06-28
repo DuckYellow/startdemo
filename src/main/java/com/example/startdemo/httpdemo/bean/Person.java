@@ -18,19 +18,25 @@ public class Person {
     private String name3;
 
     public static void main(String[] args) {
+        List<String> aList = new ArrayList<>();
+        aList.add("1");
+        aList.add("2");
+        aList.add("3");
 
+        List<String> bList = new ArrayList<>();
+        bList.add("a");
+        bList.add("b");
 
-        Person person = new Person();
-        person.setId(1);
+        for (String s : aList) {
+            System.out.print(s);
+            for (String s1 : bList) {
+                System.out.print(s1);
+                if (s1.equals("a")) {
+                    break;
+                }
+            }
+            System.out.println("");
+        }
 
-        Person person2 = new Person();
-        person2.setId(2);
-
-        List<Person> personList=new ArrayList<>();
-        personList.add(person);
-        personList.add(person2);
-
-        personList.sort(Comparator.comparing(Person::getId));
-        System.out.println("a");
     }
 }
