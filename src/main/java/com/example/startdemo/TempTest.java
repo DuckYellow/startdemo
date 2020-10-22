@@ -1,5 +1,6 @@
 package com.example.startdemo;
 
+import com.google.common.collect.ArrayListMultimap;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
 
@@ -13,6 +14,14 @@ import java.util.stream.Collectors;
  */
 public class TempTest {
 
+
+    public static void main(String[] args) {
+        ArrayListMultimap<Integer, Integer> map = ArrayListMultimap.create();
+        map.put(1, 2);
+        map.put(1, 1);
+        map.put(1, 3);
+        System.out.println("a");
+    }
 
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode dummyHead = new ListNode(0);
@@ -56,10 +65,6 @@ public class TempTest {
         ListNode(int x) {
             val = x;
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 
     public int trailingZeroes(int n) {

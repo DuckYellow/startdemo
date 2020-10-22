@@ -1,5 +1,7 @@
 package com.example.startdemo.leetcode;
 
+import org.springframework.util.CollectionUtils;
+
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -200,14 +202,375 @@ public class Solution2 {
         return count;
     }
 
+    public boolean checkRecord(String s) {
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == 'A')
+                count++;
+        }
+        return count < 2 && s.indexOf("LLL") < 0;
+    }
+
+    public String reverseWords(String s) {
+        StringBuffer ret = new StringBuffer();
+        int length = s.length();
+        int i = 0;
+        while (i < length) {
+            int start = i;
+            while (i < length && s.charAt(i) != ' ') {
+                i++;
+            }
+            for (int p = start; p < i; p++) {
+                ret.append(s.charAt(start + i - 1 - p));
+            }
+            while (i < length && s.charAt(i) == ' ') {
+                i++;
+                ret.append(' ');
+            }
+        }
+        return ret.toString();
+    }
+
+    public int arrayPairSum(int[] nums) {
+        Arrays.sort(nums);
+        int sum = 0;
+        for (int i = 0; i < nums.length; i += 2) {
+            sum += nums[i];
+        }
+        return sum;
+    }
+
+    public int[][] matrixReshape(int[][] nums, int r, int c) {
+        int[][] res = new int[r][c];
+        if (nums.length == 0 || r * c != nums.length * nums[0].length)
+            return nums;
+        int count = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < nums[0].length; j++) {
+                queue.add(nums[i][j]);
+            }
+        }
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                res[i][j] = queue.remove();
+            }
+        }
+        return res;
+    }
+
+    public int distributeCandies(int[] candies) {
+        if (candies == null || candies.length == 0) {
+            return 0;
+        }
+        int max = candies.length / 2;
+        Set<Integer> set = new HashSet<>();
+        for (int candy : candies) {
+            if (set.size() >= max) {
+                return max;
+            }
+            set.add(candy);
+        }
+        return set.size();
+    }
+
+    public static int findUnsortedSubarray(int[] nums) {
+        int[] b = nums.clone();
+        Arrays.sort(nums);
+        int start = nums.length;
+        int end = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != b[i]) {
+                start = i;
+                break;
+            }
+        }
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] != b[i]) {
+                end = i;
+                break;
+            }
+        }
+        if (end > start) {
+            return end - start + 1;
+        }
+        return 0;
+    }
+
+    public String[] findRestaurant(String[] list1, String[] list2) {
+        List<String> a = Arrays.asList(list1);
+        List<String> b = Arrays.asList(list2);
+        String c = a.stream().filter(x -> b.contains(x)).findFirst().get();
+        return new String[]{c};
+    }
+
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        for (int i = 0; i < flowerbed.length; i++) {
+            if (i == 0) {
+                if (flowerbed.length > 1) {
+                    if (flowerbed[i + 1] == 0 && flowerbed[i] == 0) {
+                        n--;
+                        flowerbed[i] = 1;
+                    }
+                } else {
+                    if (flowerbed[i] == 0) {
+                        n--;
+                        flowerbed[i] = 1;
+                    }
+                }
+
+            } else if (i == flowerbed.length - 1) {
+                if (flowerbed[i - 1] == 0 && flowerbed[i] == 0) {
+                    n--;
+                    flowerbed[i] = 1;
+                }
+            } else {
+                if (flowerbed[i - 1] == 0 && flowerbed[i + 1] == 0 && flowerbed[i] == 0) {
+                    n--;
+                    flowerbed[i] = 1;
+                }
+            }
+        }
+        return n <= 0;
+    }
+
+    public int maximumProduct(int[] nums) {
+        Arrays.sort(nums);
+        return Math.max(nums[0] * nums[1] * nums[nums.length - 1], nums[nums.length - 1] * nums[nums.length - 2] * nums[nums.length - 3]);
+    }
+
+    public double findMaxAverage(int[] nums, int k) {
+        int[] sum = new int[nums.length];
+        sum[0] = nums[0];
+        for (int i = 1; i < nums.length; i++)
+            sum[i] = sum[i - 1] + nums[i];
+        double res = sum[k - 1] * 1.0 / k;
+        for (int i = k; i < nums.length; i++) {
+            res = Math.max(res, (sum[i] - sum[i - k]) * 1.0 / k);
+        }
+        return res;
+    }
+
+
+    public int[] findErrorNums(int[] nums) {
+        Arrays.sort(nums);
+        int[] res = new int[2];
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != nums[i + 1]) {
+                res[0] = nums[i];
+            }
+            if (nums[i] != nums[i + 1]) {
+                res[1] = i + 1;
+            }
+        }
+        return res;
+    }
+
+    public static boolean judgeCircle(String moves) {
+        int ud = 0;
+        int rl = 0;
+        for (char c : moves.toCharArray()) {
+            if ('U' == c) {
+                ud++;
+            } else if ('D' == c) {
+                ud--;
+            } else if ('R' == c) {
+                rl++;
+            } else if ('C' == c) {
+                rl--;
+            }
+        }
+        return ud == 0 && rl == 0;
+    }
+
+    public static int findLengthOfLCIS(int[] nums) {
+        int res = 0;
+        if (nums.length == 0) {
+            return res;
+        }
+        int max = 1;
+        int before = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (i == 0) {
+                res++;
+            } else {
+                if (num > before) {
+                    res++;
+                } else {
+                    if (res > max) {
+                        max = res;
+                    }
+                    res = 1;
+                }
+            }
+            before = num;
+        }
+        return Math.max(max, res);
+    }
+
+    public static int calPoints(String[] ops) {
+        List<Integer> list = new ArrayList<>();
+        for (String op : ops) {
+            switch (op) {
+                case "+":
+                    Integer a = list.get(list.size() - 1);
+                    Integer b = list.get(list.size() - 2);
+                    list.add(a + b);
+                    break;
+                case "C":
+                    list.remove(list.size() - 1);
+                    break;
+                case "D":
+                    Integer c = list.get(list.size() - 1);
+                    list.add(c * 2);
+                    break;
+                default:
+                    list.add(Integer.valueOf(op));
+            }
+        }
+
+        Integer res = 0;
+        for (Integer integer : list) {
+            res += integer;
+        }
+        return res;
+    }
+
+    static class Employee {
+        public int id;
+        public int importance;
+        public List<Integer> subordinates;
+    }
+
+    public static int getImportance(List<Employee> employees, int id) {
+
+        Map<Integer, Employee> employeeMap = new HashMap<>();
+        for (Employee employee : employees) {
+            employeeMap.put(employee.id, employee);
+        }
+        return getImportance(employeeMap, id);
+    }
+
+    private static int getImportance(Map<Integer, Employee> employeeMap, int id) {
+        if (employeeMap.get(id) == null) {
+            return 0;
+        }
+        int r = employeeMap.get(id).importance;
+        if (employeeMap.get(id).subordinates == null || employeeMap.get(id).subordinates.isEmpty()) {
+            return r;
+        }
+        for (Integer id2 : employeeMap.get(id).subordinates) {
+            r += getImportance(employeeMap, id2);
+        }
+        return r;
+    }
+
+    public static boolean hasAlternatingBits(int n) {
+        String binary = Integer.toBinaryString(n);
+        char a = 2;
+        for (char c : binary.toCharArray()) {
+            if (a != c) {
+                a = c;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static int findShortestSubArray(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, List<Integer>> indexMap = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (!map.containsKey(num)) {
+                map.put(num, 0);
+            }
+            map.put(num, map.get(num) + 1);
+
+            if (!indexMap.containsKey(num)) {
+                indexMap.put(num, new ArrayList<>());
+            }
+            indexMap.get(num).add(i);
+        }
+
+        int num = -1;
+        for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
+            if (integerIntegerEntry.getValue() > num) {
+                num = integerIntegerEntry.getValue();
+            }
+        }
+        List<Integer> keyList = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
+            if (integerIntegerEntry.getValue() == num) {
+                keyList.add(integerIntegerEntry.getKey());
+            }
+        }
+
+        int returnA = Integer.MAX_VALUE;
+        for (Integer key : keyList) {
+            List<Integer> index = indexMap.get(key);
+            int res = index.get(index.size() - 1) - index.get(0) + 1;
+            returnA = Math.min(returnA, res);
+        }
+
+        return returnA;
+    }
+
+    static class KthLargest {
+        private int big;
+        private List<Integer> list;
+
+        public KthLargest(int k, int[] nums) {
+            big = k;
+            list = Arrays.stream(nums).boxed().collect(Collectors.toList());
+        }
+
+        public int add(int val) {
+            List<Integer> b = new ArrayList<>(list);
+            b.add(val);
+            b.sort((o1, o2) -> {
+                if (o1 > o2) {
+                    return 1;
+                } else if (o1.equals(o2)) {
+                    return 0;
+                }
+                return -1;
+            });
+            return b.get(big - 1);
+        }
+    }
+
+    public int search(int[] nums, int target) {
+        int pivot, left = 0, right = nums.length - 1;
+        while (left <= right) {
+            pivot = left + (right - left) / 2;
+            if (nums[pivot] == target) {
+                return pivot;
+            }
+            if (target < nums[pivot]) {
+                right = pivot - 1;
+            } else {
+                left = pivot + 1;
+            }
+        }
+        return -1;
+    }
+
 
     public static void main(String[] args) {
+        int k = 3;
+        int[] arr = new int[]{4, 5, 8, 2};
+        KthLargest kthLargest = new KthLargest(3, arr);
 
-        //重量
-        Float a = 1.00f;
-        String aStr = String.valueOf(a.intValue());
 
-        Integer ai = Integer.valueOf(aStr);
-        System.out.println(ai);
+        System.out.println(kthLargest.add(3));
+        System.out.println(kthLargest.add(5));
+        System.out.println(kthLargest.add(10));
+        System.out.println(kthLargest.add(9));
+        System.out.println(kthLargest.add(4));
     }
+
+
 }
