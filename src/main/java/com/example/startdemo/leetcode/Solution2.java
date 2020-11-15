@@ -558,9 +558,48 @@ public class Solution2 {
         return -1;
     }
 
+    public String toLowerCase(String str) {
+        return str.toLowerCase();
+    }
 
-    public static void main(String[] args) {
+    public String longestWord(String[] words) {
+        Map<Integer, List<String>> map = new HashMap<>();
+        for (String word : words) {
+            if (!map.containsKey(word.length())) {
+                map.put(words.length, new ArrayList<>());
+            }
+            map.get(word.length()).add(word);
+        }
+        List<String> startList = map.get(1);
+        if (CollectionUtils.isEmpty(startList)) {
+            return null;
+        }
 
+        for (String s : startList) {
+            int size = s.length();
+            List<String> list = map.get(size);
+        }
+        return null;
+
+    }
+
+    static {
+        int x = 5;
+    }
+
+    public static void myMethod() {
+        y = x++ + ++x;
+    }
+
+    static int x, y;
+
+    public static void main(String args[]) {
+        x--;
+        myMethod();
+        System.out.println(x + y + ++x);
+    }
+
+    private static void calTable() {
         System.out.println(18002130 % 8);
         System.out.println(18002130 % 512);
         System.out.println(9244746 % 8);
@@ -574,7 +613,8 @@ public class Solution2 {
 
         System.out.println(2375 % 8);
         System.out.println(2375 % 512);
+
+        System.out.println(515970844 % 8);
+        System.out.println(515970844 % 512);
     }
-
-
 }
