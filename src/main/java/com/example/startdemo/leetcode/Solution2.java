@@ -563,41 +563,39 @@ public class Solution2 {
     }
 
     public String longestWord(String[] words) {
-        Map<Integer, List<String>> map = new HashMap<>();
+        String ans = "";
+        Set<String> wordset = new HashSet();
         for (String word : words) {
-            if (!map.containsKey(word.length())) {
-                map.put(words.length, new ArrayList<>());
+            wordset.add(word);
+        }
+
+        for (String word : words) {
+            if (word.length() > ans.length() || word.length() == ans.length() && word.compareTo(ans) < 0) {
+                boolean good = true;
+                for (int k = 1; k < word.length(); ++k) {
+                    if (!wordset.contains(word.substring(0, k))) {
+                        good = false;
+                        break;
+                    }
+                }
+                if (good) {
+                    ans = word;
+                }
             }
-            map.get(word.length()).add(word);
         }
-        List<String> startList = map.get(1);
-        if (CollectionUtils.isEmpty(startList)) {
-            return null;
+        return ans;
+    }
+
+    public int pivotIndex(int[] nums) {
+        int sum = 0, leftsum = 0;
+        for (int x : nums) sum += x;
+        for (int i = 0; i < nums.length; ++i) {
+            if (leftsum == sum - leftsum - nums[i]) return i;
+            leftsum += nums[i];
         }
-
-        for (String s : startList) {
-            int size = s.length();
-            List<String> list = map.get(size);
-        }
-        return null;
-
+        return -1;
     }
 
-    static {
-        int x = 5;
-    }
-
-    public static void myMethod() {
-        y = x++ + ++x;
-    }
-
-    static int x, y;
-
-    public static void main(String args[]) {
-        x--;
-        myMethod();
-        System.out.println(x + y + ++x);
-    }
 
     private static void calTable() {
         System.out.println(18002130 % 8);
@@ -616,5 +614,9 @@ public class Solution2 {
 
         System.out.println(515970844 % 8);
         System.out.println(515970844 % 512);
+    }
+
+    public static void main(String[] args) {
+        calTable();
     }
 }
