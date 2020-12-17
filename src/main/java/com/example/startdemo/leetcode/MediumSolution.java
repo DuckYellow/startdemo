@@ -6,6 +6,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MediumSolution {
     public static class ListNode {
@@ -338,7 +339,7 @@ public class MediumSolution {
         if (n == 0) {
             return combinations;
         }
-        if (n==1){
+        if (n == 1) {
             return Arrays.asList("()");
         }
         for (int i = 0; i < n; i++) {
@@ -379,7 +380,7 @@ public class MediumSolution {
             String temp2 = combination + "()";
             String temp3 = combination + "))";
             String temp4 = combination + ")(";
-            if (index != length-1) {
+            if (index != length - 1) {
                 temp.add(temp1);
                 temp.add(temp2);
                 temp.add(temp3);
@@ -403,9 +404,271 @@ public class MediumSolution {
         return temp;
     }
 
+    public ListNode swapPairs(ListNode head) {
+
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode newHead = head.next;
+        head.next = swapPairs(newHead.next);
+        newHead.next = head;
+        return newHead;
+    }
+
+    public void nextPermutation(int[] nums) {
+        int i = nums.length - 2;
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+        if (i >= 0) {
+            int j = nums.length - 1;
+            while (j >= 0 && nums[i] >= nums[j]) {
+                j--;
+            }
+            swap(nums, i, j);
+        }
+        reverse(nums, i + 1);
+    }
+
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    public void reverse(int[] nums, int start) {
+        int left = start, right = nums.length - 1;
+        while (left < right) {
+            swap(nums, left, right);
+            left++;
+            right--;
+        }
+    }
+
+    public static List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        int len = candidates.length;
+        List<List<Integer>> res = new ArrayList<>();
+        if (len == 0) {
+            return res;
+        }
+        Arrays.sort(candidates);
+
+        Deque<Integer> path = new ArrayDeque<>();
+        dfs(candidates, 0, len, target, path, res);
+        return res;
+    }
+
+    /**
+     * @param candidates 候选数组
+     * @param begin      搜索起点
+     * @param len        冗余变量，是 candidates 里的属性，可以不传
+     * @param target     每减去一个元素，目标值变小
+     * @param path       从根结点到叶子结点的路径，是一个栈
+     * @param res        结果集列表
+     */
+    private static void dfs(int[] candidates, int begin, int len, int target, Deque<Integer> path, List<List<Integer>> res) {
+        // target 为负数和 0 的时候不再产生新的孩子结点
+        if (target < 0) {
+            return;
+        }
+        if (target == 0) {
+            if (!res.contains(new ArrayList<>(path))) {
+                res.add(new ArrayList<>(path));
+            }
+
+            return;
+        }
+        // 重点理解这里从 begin 开始搜索的语意
+        for (int i = begin; i < len; i++) {
+//            if (i !=0 && candidates[i] == candidates[i-1]){
+//                continue;
+//            }
+            path.addLast(candidates[i]);
+
+            // 注意：由于每一个元素可以重复使用，下一轮搜索的起点依然是 i，这里非常容易弄错
+            dfs(candidates, i + 1, len, target - candidates[i], path, res);
+
+            // 状态重置
+            path.removeLast();
+        }
+    }
+
+    public static String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) {
+            return "0";
+        }
+        String ans = "0";
+        int m = num1.length(), n = num2.length();
+        for (int i = n - 1; i >= 0; i--) {
+            StringBuffer curr = new StringBuffer();
+            int add = 0;
+            for (int j = n - 1; j > i; j--) {
+                curr.append(0);
+            }
+            int y = num2.charAt(i) - '0';
+            for (int j = m - 1; j >= 0; j--) {
+                int x = num1.charAt(j) - '0';
+                int product = x * y + add;
+                curr.append(product % 10);
+                add = product / 10;
+            }
+            if (add != 0) {
+                curr.append(add % 10);
+            }
+            ans = addStrings(ans, curr.reverse().toString());
+        }
+        return ans;
+    }
+
+    public static String addStrings(String num1, String num2) {
+        int i = num1.length() - 1, j = num2.length() - 1, add = 0;
+        StringBuffer ans = new StringBuffer();
+        while (i >= 0 || j >= 0 || add != 0) {
+            int x = i >= 0 ? num1.charAt(i) - '0' : 0;
+            int y = j >= 0 ? num2.charAt(j) - '0' : 0;
+            int result = x + y + add;
+            ans.append(result % 10);
+            add = result / 10;
+            i--;
+            j--;
+        }
+        ans.reverse();
+        return ans.toString();
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+
+        List<Integer> output = new ArrayList<Integer>();
+        for (int num : nums) {
+            output.add(num);
+        }
+        int n = nums.length;
+        Arrays.sort(nums);
+        backtrack(n, output, res, 0);
+        return res;
+    }
+
+    public static void backtrack(int n, List<Integer> output, List<List<Integer>> res, int first) {
+        // 所有数都填完了
+        if (first == n) {
+            res.add(new ArrayList<Integer>(output));
+        }
+        for (int i = first; i < n; i++) {
+            // 动态维护数组
+            Collections.swap(output, first, i);
+            // 继续递归填下一个数
+            backtrack(n, output, res, first + 1);
+            // 撤销操作
+            Collections.swap(output, first, i);
+        }
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> order = new ArrayList<Integer>();
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return order;
+        }
+        int rows = matrix.length;
+        int columns = matrix[0].length;
+        boolean[][] visited = new boolean[rows][columns];
+        int total = rows * columns;
+        int row = 0, column = 0;
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int directionIndex = 0;
+        for (int i = 0; i < total; i++) {
+            order.add(matrix[row][column]);
+            visited[row][column] = true;
+            int nextRow = row + directions[directionIndex][0], nextColumn = column + directions[directionIndex][1];
+            if (nextRow < 0 || nextRow >= rows || nextColumn < 0 || nextColumn >= columns || visited[nextRow][nextColumn]) {
+                directionIndex = (directionIndex + 1) % 4;
+            }
+            row += directions[directionIndex][0];
+            column += directions[directionIndex][1];
+        }
+        return order;
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> res = new ArrayList<>();
+        if (strs.length == 0) {
+            return res;
+        }
+        Map<String, List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String sort = new String(chars);
+            if (!map.containsKey(sort)) {
+                map.put(sort, new ArrayList<>());
+            }
+            map.get(sort).add(str);
+
+        }
+        res.addAll(map.values());
+        return res;
+    }
+
+    public static double myPow(double x, int n) {
+        long N = n;
+        return N >= 0 ? quickMul(x, N) : 1.0 / quickMul(x, -N);
+
+    }
+
+    private static double quickMul(double x, long N) {
+        if (N == 0) {
+            return 1.0;
+        }
+        double y = quickMul(x, N / 2);
+        return N % 2 == 0 ? y * y : y * y * x;
+    }
+
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        int rightmost = 0;
+        for (int i = 0; i < n; ++i) {
+            if (i <= rightmost) {
+                rightmost = Math.max(rightmost, i + nums[i]);
+                if (rightmost >= n - 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static int[][] merge(int[][] intervals) {
+        if (intervals.length == 0) {
+            return new int[0][2];
+        }
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            public int compare(int[] interval1, int[] interval2) {
+                return interval1[0] - interval2[0];
+            }
+        });
+        List<int[]> merged = new ArrayList<int[]>();
+        for (int i = 0; i < intervals.length; ++i) {
+            int L = intervals[i][0], R = intervals[i][1];
+            if (merged.size() == 0 || merged.get(merged.size() - 1)[1] < L) {
+                merged.add(new int[]{L, R});
+            } else {
+                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], R);
+            }
+        }
+        return merged.toArray(new int[merged.size()][]);
+    }
 
     public static void main(String[] args) {
-        System.out.println(generateParenthesis(3).toString());
+        int[][] param = new int[4][2];
+        param[0][0] = 1;
+        param[0][1] = 3;
+        param[1][0] = 2;
+        param[1][1] = 6;
+        param[2][0] = 8;
+        param[2][1] = 10;
+        param[3][0] = 15;
+        param[3][1] = 18;
+        System.out.println(merge(param));
     }
 
 
