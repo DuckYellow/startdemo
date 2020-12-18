@@ -2,15 +2,12 @@ package com.example.startdemo.date;
 
 import com.alibaba.excel.EasyExcel;
 import com.btime.util.DateUtil;
-import com.btime.util.XlsReader;
+import com.example.startdemo.date.entity.ExcelUtil;
 import com.example.startdemo.date.entity.ReviewDO;
 import com.example.startdemo.date.entity.WorkflowExcelDO;
 import com.google.gson.Gson;
 import lombok.Data;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.*;
 
 public class PurchaseOrderDeal {
@@ -22,7 +19,7 @@ public class PurchaseOrderDeal {
     private static Gson gson = new Gson();
 
     public static void main(String[] args) {
-        readFile("/Users/xuweihang/Desktop/审批流元数据.csv");
+        readFile("/Users/xuweihang/Desktop/审批流元数据.xlsx");
         dealDate();
         EasyExcel.write("/Users/xuweihang/Desktop/审批流元数据处理结果.xlsx", WorkflowExcelDO.class).sheet("sheet1").doWrite(excelDOS);
     }
@@ -49,10 +46,10 @@ public class PurchaseOrderDeal {
             for (int i = 0; i < stringListEntry.getValue().size(); i++) {
                 ReviewDO reviewDO = stringListEntry.getValue().get(i);
                 Process process = new Process();
-                if (index == 0) {
+                if (index > 0) {
                     process.setParentNode(String.valueOf(i - 1));
                 }
-                if (index != 0) {
+                if (index == 0) {
                     excelDO.setPurchaseOrderNo(reviewDO.getBussinessId());
                     excelDO.setCreateUid(reviewDO.getCreator());
                     excelDO.setCreateTime(DateUtil.getDateString(reviewDO.getCreateTime()));
@@ -98,11 +95,24 @@ public class PurchaseOrderDeal {
     }
 
     private static void readFile(String filePath) {
+        List<Object> reviewDOS = ExcelUtil.readMoreThan1000Row(filePath);
+        for (int i = 1; i < reviewDOS.size(); i++) {
+            Object object = reviewDOS.get(i);
+            List<String> list = (List<String>) object;
 
+            ReviewDO reviewDO = new ReviewDO();
+            reviewDO.setBussinessId(list.get(0));
+            reviewDO.setPassFlag(Integer.valueOf(list.get(1)));
 
-        XlsReader reader = new XlsReader();
-        List<ReviewDO> res = reader.load(filePath, ReviewDO.class);
-        System.out.println("a");
+            reviewDO.setRemark(list.get(4));
+            reviewDO.setCreator(list.get(5));
+            reviewDO.setCreateTime(DateUtil.parseDate(list.get(6)));
+
+            if (!dateMap.containsKey(reviewDO.getBussinessId())) {
+                dateMap.put(reviewDO.getBussinessId(), new ArrayList<>());
+            }
+            dateMap.get(reviewDO.getBussinessId()).add(reviewDO);
+        }
     }
 
     @Data
