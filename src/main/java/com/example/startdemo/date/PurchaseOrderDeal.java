@@ -57,7 +57,7 @@ public class PurchaseOrderDeal {
                 process.setNode(String.valueOf(i));
                 process.setOptUid(Long.valueOf(reviewDO.getCreator()));
                 process.setPass(reviewDO.getPassFlag());
-                process.setDate(DateUtil.getDateString(reviewDO.getCreateTime()));
+                process.setDate(DateUtil.getDateTimeString(reviewDO.getCreateTime()));
                 //直接拒绝 结束当前审批流
                 switch (index) {
                     case 0:
