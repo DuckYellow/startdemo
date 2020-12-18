@@ -52,7 +52,7 @@ public class PurchaseOrderDeal {
                 if (index == 0) {
                     excelDO.setPurchaseOrderNo(reviewDO.getBussinessId());
                     excelDO.setCreateUid(reviewDO.getCreator());
-                    excelDO.setCreateTime(DateUtil.getDateString(reviewDO.getCreateTime()));
+                    excelDO.setCreateTime(DateUtil.getDateTimeString(reviewDO.getCreateTime()));
                 }
                 process.setNode(String.valueOf(i));
                 process.setOptUid(Long.valueOf(reviewDO.getCreator()));
