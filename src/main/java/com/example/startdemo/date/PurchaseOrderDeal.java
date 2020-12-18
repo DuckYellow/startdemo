@@ -2,11 +2,13 @@ package com.example.startdemo.date;
 
 import com.alibaba.excel.EasyExcel;
 import com.btime.util.DateUtil;
+import com.btime.util.StringUtil;
 import com.example.startdemo.date.entity.ExcelUtil;
 import com.example.startdemo.date.entity.ReviewDO;
 import com.example.startdemo.date.entity.WorkflowExcelDO;
 import com.google.gson.Gson;
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -87,6 +89,13 @@ public class PurchaseOrderDeal {
                 if (reviewDO.getPassFlag() == 0) {
                     index = 0;
                     excelDOS.add(excelDO);
+                    excelDO = new WorkflowExcelDO();
+                }
+                if (i == stringListEntry.getValue().size() - 1) {
+                    index = 0;
+                    if (!StringUtils.isEmpty(excelDO.getPurchaseOrderNo())) {
+                        excelDOS.add(excelDO);
+                    }
                     excelDO = new WorkflowExcelDO();
                 }
             }
