@@ -21,7 +21,7 @@ import java.util.List;
  * @author xuweihang@qbb.com
  * @date 2019-12-25 19:07
  */
-public class PictureTest {
+public class PictureDemo {
     private static Gson gson = GsonUtil.createGson();
     static String desktop = "/Users/xuweihang/Desktop/pic/";
     static String desktop2 = "/Users/xuweihang/Desktop/pic2/";
