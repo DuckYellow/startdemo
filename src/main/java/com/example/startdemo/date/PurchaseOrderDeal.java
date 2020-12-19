@@ -88,15 +88,16 @@ public class PurchaseOrderDeal {
                 //拒绝了 重新开始
                 if (reviewDO.getPassFlag() == 0) {
                     index = 0;
-                    excelDOS.add(excelDO);
-                    excelDO = new WorkflowExcelDO();
-                }
-                if (i == stringListEntry.getValue().size() - 1) {
-                    index = 0;
-                    if (!StringUtils.isEmpty(excelDO.getPurchaseOrderNo())) {
+                    if (!StringUtils.isEmpty(excelDO.getWorkflow2()) && excelDO.getWorkflow2().length() > 0) {
                         excelDOS.add(excelDO);
                     }
                     excelDO = new WorkflowExcelDO();
+                }
+                //最后一组数据
+                if (i == stringListEntry.getValue().size() - 1) {
+                    if (!StringUtils.isEmpty(excelDO.getWorkflow2()) && excelDO.getWorkflow2().length() > 0) {
+                        excelDOS.add(excelDO);
+                    }
                 }
             }
 
