@@ -87,21 +87,32 @@ public class MediumSolution2 {
         return dp[rows - 1][columns - 1];
     }
 
-    public String simplifyPath(String path) {
+    public static String simplifyPath(String path) {
         List<String> res = new ArrayList<>();
         if (path == null || path.length() == 0) {
             return "/";
         }
         String[] pathList = path.split("/");
         for (String singlePath : pathList) {
-
+            if (singlePath == null || singlePath.length() <= 0) {
+                continue;
+            }
+            switch (singlePath) {
+                case ".":
+                    break;
+                case "..":
+                    if (res.size() > 0) {
+                        res.remove(res.size() - 1);
+                    }
+                    break;
+                default:
+                    res.add(singlePath);
+            }
         }
         return "/" + String.join("/", res);
     }
 
     public static void main(String[] args) {
-
+        System.out.println(simplifyPath("/a//b////c/d//././/.."));
     }
-
-
 }
