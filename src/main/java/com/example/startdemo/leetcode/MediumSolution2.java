@@ -1,5 +1,7 @@
 package com.example.startdemo.leetcode;
 
+import org.springframework.util.StringUtils;
+
 import java.util.*;
 
 public class MediumSolution2 {
@@ -83,6 +85,18 @@ public class MediumSolution2 {
             }
         }
         return dp[rows - 1][columns - 1];
+    }
+
+    public String simplifyPath(String path) {
+        List<String> res = new ArrayList<>();
+        if (path == null || path.length() == 0) {
+            return "/";
+        }
+        String[] pathList = path.split("/");
+        for (String singlePath : pathList) {
+
+        }
+        return "/" + String.join("/", res);
     }
 
     public static void main(String[] args) {
