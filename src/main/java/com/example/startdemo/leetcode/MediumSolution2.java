@@ -112,7 +112,49 @@ public class MediumSolution2 {
         return "/" + String.join("/", res);
     }
 
+    public static void setZeroes(int[][] matrix) {
+        if (matrix.length == 0) {
+            return;
+        }
+        //竖着的
+        int m = matrix.length;
+        //恨着
+        int n = matrix[0].length;
+        Map<Integer, Set<Integer>> map = new HashMap<>();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int i1 = 0; i1 < matrix[i].length; i1++) {
+                if (matrix[i][i1] == 0) {
+
+                    for (int j = 0; j < n; j++) {
+                        if (!map.containsKey(i)) {
+                            map.put(i, new HashSet<>());
+                        }
+                        map.get(i).add(j);
+                    }
+                    for (int j = 0; j < m; j++) {
+                        if (!map.containsKey(j)) {
+                            map.put(j, new HashSet<>());
+                        }
+                        map.get(j).add(i1);
+                    }
+                }
+            }
+        }
+        for (Map.Entry<Integer, Set<Integer>> integerSetEntry : map.entrySet()) {
+            for (Integer integer : integerSetEntry.getValue()) {
+                matrix[integerSetEntry.getKey()][integer] = 0;
+            }
+        }
+        System.out.println("a");
+    }
+
     public static void main(String[] args) {
-        System.out.println(simplifyPath("/a//b////c/d//././/.."));
+        int[][] matrix = new int[2][2];
+        matrix[0][0] = 1;
+        matrix[0][1] = 1;
+
+        matrix[1][0] = 0;
+        matrix[1][1] = 1;
+        setZeroes(matrix);
     }
 }
