@@ -21,9 +21,9 @@ public class PurchaseOrderDeal {
     private static Gson gson = new Gson();
 
     public static void main(String[] args) {
-        readFile("/Users/xuweihang/Desktop/审批流元数据测试.xlsx");
+        readFile("/Users/xuweihang/Desktop/审批流元数据.xlsx");
         dealDate();
-        EasyExcel.write("/Users/xuweihang/Desktop/审批流元数据处理结果测试.xlsx", WorkflowExcelDO.class).sheet("sheet1").doWrite(excelDOS);
+        EasyExcel.write("/Users/xuweihang/Desktop/审批流元数据处理结果.xlsx", WorkflowExcelDO.class).sheet("sheet1").doWrite(excelDOS);
     }
 
     private static void dealDate() {
