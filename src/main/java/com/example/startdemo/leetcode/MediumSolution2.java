@@ -148,13 +148,125 @@ public class MediumSolution2 {
         System.out.println("a");
     }
 
-    public static void main(String[] args) {
-        int[][] matrix = new int[2][2];
-        matrix[0][0] = 1;
-        matrix[0][1] = 1;
+    public static boolean searchMatrix(int[][] matrix, int target) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return false;
+        }
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][0] > target) {
+                if (i == 0) {
+                    return false;
+                }
+                int ii = i - 1;
+                for (int j = 0; j < matrix[0].length; j++) {
+                    if (matrix[ii][j] == target) {
+                        return true;
+                    }
+                }
+            }
+            if (i == matrix.length - 1) {
+                for (int j = 0; j < matrix[0].length; j++) {
+                    if (matrix[i][j] == target) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
-        matrix[1][0] = 0;
-        matrix[1][1] = 1;
-        setZeroes(matrix);
+    public void sortColors(int[] nums) {
+        int n = nums.length;
+        int p0 = 0, p1 = 0;
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 1) {
+                int temp = nums[i];
+                nums[i] = nums[p1];
+                nums[p1] = temp;
+                ++p1;
+            } else if (nums[i] == 0) {
+                int temp = nums[i];
+                nums[i] = nums[p0];
+                nums[p0] = temp;
+                if (p0 < p1) {
+                    temp = nums[i];
+                    nums[i] = nums[p1];
+                    nums[p1] = temp;
+                }
+                ++p0;
+                ++p1;
+            }
+        }
+    }
+
+    public static List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (k <= 0 || n < k) {
+            return res;
+        }
+        // 从 1 开始是题目的设定
+        Deque<Integer> path = new ArrayDeque<>();
+        dfs(n, k, 1, path, res);
+        return res;
+    }
+
+    private static void dfs(int n, int k, int begin, Deque<Integer> path, List<List<Integer>> res) {
+        // 递归终止条件是：path 的长度等于 k
+        if (path.size() == k) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        // 遍历可能的搜索起点
+        for (int i = begin; i <= n; i++) {
+            // 向路径变量里添加一个数
+            path.addLast(i);
+            // 下一轮搜索，设置的搜索起点要加 1，因为组合数理不允许出现重复的元素
+            dfs(n, k, i + 1, path, res);
+            // 重点理解这里：深度优先遍历有回头的过程，因此递归之前做了什么，递归之后需要做相同操作的逆向操作
+            path.removeLast();
+        }
+    }
+
+
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<Integer> t = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        int n = nums.length;
+        for (int mask = 0; mask < (1 << n); ++mask) {
+            t.clear();
+
+            for (int i = 0; i < n; ++i) {
+                if ((mask & (1 << i)) != 0) {
+                    t.add(nums[i]);
+                }
+            }
+            ans.add(new ArrayList<>(t));
+        }
+        return ans;
+    }
+
+    public List<List<Integer>> subsets2(int[] nums) {
+        List<Integer> t = new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        dfs(0, nums, t, ans);
+        return ans;
+    }
+
+    public void dfs(int cur, int[] nums, List<Integer> t, List<List<Integer>> ans) {
+        if (cur == nums.length) {
+            ans.add(new ArrayList<Integer>(t));
+            return;
+        }
+        t.add(nums[cur]);
+        dfs(cur + 1, nums, t, ans);
+        t.remove(t.size() - 1);
+        dfs(cur + 1, nums, t, ans);
+    }
+
+
+    public static void main(String[] args) {
+
+        System.out.println(subsets(new int[]{1, 2, 3}));
     }
 }
