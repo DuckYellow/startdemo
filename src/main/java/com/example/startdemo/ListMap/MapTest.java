@@ -1,6 +1,7 @@
 package com.example.startdemo.ListMap;
 
 import com.google.gson.Gson;
+import lombok.Data;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,17 +10,30 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class MapTest {
 
     private static Gson gson = new Gson();
+
     public static void main(String[] args) {
-        Map a = new HashMap();
-        a.put(1, 1);
+        Map<Student, Integer> map = new HashMap();
+        Student student = new Student();
+        student.setId(1);
+        System.out.println(student.hashCode());
 
-        Map b = new ConcurrentHashMap();
-        b.put(1, 1);
-        b.get(1);
-        Set<String> seta = new HashSet();
-        seta.add("a");
+        map.put(student, 1);
+        student.setId(2);
+        System.out.println(student.hashCode());
+        System.out.println(map.get(student));
+    }
 
-        getOrDefault();
+
+    static class Student {
+        private Integer id;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
     }
 
     public static void forEach() {

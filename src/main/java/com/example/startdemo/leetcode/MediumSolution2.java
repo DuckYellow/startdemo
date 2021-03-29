@@ -265,8 +265,219 @@ public class MediumSolution2 {
     }
 
 
-    public static void main(String[] args) {
+    public static int removeDuplicates(int[] nums) {
+        int j = 1, count = 1;
+        for (int i = 1; i < nums.length; i++) {
 
-        System.out.println(subsets(new int[]{1, 2, 3}));
+            if (nums[i] == nums[i - 1]) {
+                count++;
+            } else {
+                count = 1;
+            }
+            if (count <= 2) {
+                nums[j++] = nums[i];
+            }
+        }
+        return j;
+    }
+
+    public boolean search(int[] nums, int target) {
+        for (int num : nums) {
+            if (num == target) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        if (head.val == head.next.val) {
+            while (head != null && head.next != null && head.val == head.next.val) {
+                head = head.next;
+            }
+            return deleteDuplicates(head.next);
+        } else {
+            head.next = deleteDuplicates(head.next);
+            return head;
+        }
+    }
+
+    public static ListNode partition(ListNode head, int x) {
+        ListNode before_head = new ListNode(0);
+        ListNode before = before_head;
+        ListNode after_head = new ListNode(0);
+        ListNode after = after_head;
+        while (head != null) {
+            if (head.val < x) {
+                before.next = head;
+                before = before.next;
+            } else {
+                after.next = head;
+                after = after.next;
+            }
+            head = head.next;
+        }
+
+        after.next = null;
+        before.next = after_head.next;
+
+        return before_head.next;
+    }
+
+    public static List<Integer> grayCode(int n) {
+        List<Integer> res = new ArrayList<Integer>() {{
+            add(0);
+        }};
+        int head = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = res.size() - 1; j >= 0; j--)
+                res.add(head + res.get(j));
+            head <<= 1;
+        }
+        return res;
+    }
+
+    public static List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        ans.add(new ArrayList<>());// 初始化空数组
+        Arrays.sort(nums);
+        int start = 1; //保存新解的开始位置
+        for (int i = 0; i < nums.length; i++) {
+            List<List<Integer>> ans_tmp = new ArrayList<>();
+            // 遍历之前的所有结果
+            for (int j = 0; j < ans.size(); j++) {
+                List<Integer> list = ans.get(j);
+                //如果出现重复数字，就跳过所有旧解
+                if (i > 0 && nums[i] == nums[i - 1] && j < start) {
+                    continue;
+                }
+                List<Integer> tmp = new ArrayList<>(list);
+                tmp.add(nums[i]); // 加入新增数字
+                ans_tmp.add(tmp);
+            }
+
+            start = ans.size(); //更新新解的开始位置
+            ans.addAll(ans_tmp);
+        }
+        return ans;
+    }
+
+    private boolean stop;
+    private ListNode left;
+
+    public void recurseAndReverse(ListNode right, int m, int n) {
+
+        // base case. Don't proceed any further
+        if (n == 1) {
+            return;
+        }
+
+        // Keep moving the right pointer one step forward until (n == 1)
+        right = right.next;
+
+        // Keep moving left pointer to the right until we reach the proper node
+        // from where the reversal is to start.
+        if (m > 1) {
+            this.left = this.left.next;
+        }
+
+        // Recurse with m and n reduced.
+        this.recurseAndReverse(right, m - 1, n - 1);
+
+        // In case both the pointers cross each other or become equal, we
+        // stop i.e. don't swap data any further. We are done reversing at this
+        // point.
+        if (this.left == right || right.next == this.left) {
+            this.stop = true;
+        }
+
+        // Until the boolean stop is false, swap data between the two pointers
+        if (!this.stop) {
+            int t = this.left.val;
+            this.left.val = right.val;
+            right.val = t;
+
+            // Move left one step to the right.
+            // The right pointer moves one step back via backtracking.
+            this.left = this.left.next;
+        }
+    }
+
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        this.left = head;
+        this.stop = false;
+        this.recurseAndReverse(head, m, n);
+        return head;
+    }
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        inorder(root, res);
+        return res;
+    }
+
+    public void inorder(TreeNode root, List<Integer> res) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, res);
+        res.add(root.val);
+        inorder(root.right, res);
+    }
+
+    public void flatten(TreeNode root) {
+        List<TreeNode> list = new ArrayList<TreeNode>();
+        preorderTraversal(root, list);
+        int size = list.size();
+        for (int i = 1; i < size; i++) {
+            TreeNode prev = list.get(i - 1), curr = list.get(i);
+            prev.left = null;
+            prev.right = curr;
+        }
+    }
+
+    public void preorderTraversal(TreeNode root, List<TreeNode> list) {
+        if (root != null) {
+            list.add(root);
+            preorderTraversal(root.left, list);
+            preorderTraversal(root.right, list);
+        }
+    }
+
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        preorder(root, res);
+        return res;
+    }
+
+    public void preorder(TreeNode root, List<Integer> res) {
+        if (root == null) {
+            return;
+        }
+        res.add(root.val);
+        preorder(root.left, res);
+        preorder(root.right, res);
+    }
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        postorder(root, res);
+        return res;
+    }
+
+    public void postorder(TreeNode root, List<Integer> res) {
+        if (root == null) {
+            return;
+        }
+        postorder(root.left, res);
+        postorder(root.right, res);
+        res.add(root.val);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(grayCode(2).toString());
     }
 }
