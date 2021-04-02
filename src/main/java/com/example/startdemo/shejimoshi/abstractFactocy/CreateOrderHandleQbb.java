@@ -1,6 +1,6 @@
 package com.example.startdemo.shejimoshi.abstractFactocy;
 
-public class CreateOrderHandelQbb implements CreateOrderHandel {
+public class CreateOrderHandleQbb implements CreateOrderHandle {
     @Override
     public void apply() {
 

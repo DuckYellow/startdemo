@@ -5,7 +5,7 @@ public abstract class App {
     /**
      * 创建订单
      */
-    public abstract CreateOrderHandel getCreateOrderHandel();
+    public abstract CreateOrderHandle getCreateOrderHandel();
 
     /**
      * 订单确认

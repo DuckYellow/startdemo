@@ -1,5 +1,5 @@
 package com.example.startdemo.shejimoshi.abstractFactocy;
 
-public interface CreateOrderHandel {
+public interface CreateOrderHandle {
      void apply();
 }

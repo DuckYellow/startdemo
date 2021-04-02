@@ -4,8 +4,8 @@ public class DoudianApp extends App {
 
 
     @Override
-    public CreateOrderHandel getCreateOrderHandel() {
-        return new CreateOrderHandelDoudian();
+    public CreateOrderHandle getCreateOrderHandel() {
+        return new CreateOrderHandleDoudian();
     }
 
     @Override
