@@ -597,26 +597,43 @@ public class Solution2 {
     }
 
 
-    private static void calTable() {
-        System.out.println(18002130 % 8);
-        System.out.println(18002130 % 512);
-        System.out.println(9244746 % 8);
-        System.out.println(9244746 % 512);
+    public static int numTrees(int n) {
+        int[] G = new int[n + 1];
+        G[0] = 1;
+        G[1] = 1;
 
-        System.out.println(18002458 % 8);
-        System.out.println(18002458 % 512);
+        for (int i = 2; i <= n; ++i) {
+            for (int j = 1; j <= i; ++j) {
 
-        System.out.println(18002298 % 8);
-        System.out.println(18002298 % 512);
+                G[i] += G[j - 1] * G[i - j];
+            }
+        }
+        return G[n];
+    }
 
-        System.out.println(2375 % 8);
-        System.out.println(2375 % 512);
+    public List<TreeNode> generateTrees(int n) {
+        int[] G = new int[n + 1];
+        G[0] = 1;
+        G[1] = 1;
 
-        System.out.println(515970844 % 8);
-        System.out.println(515970844 % 512);
+        List<TreeNode> list = new ArrayList<>();
+        for (int i = 2; i <= n; ++i) {
+            for (int j = 1; j <= i; ++j) {
+                if (i == n) {
+
+                }
+//                list.add(new TreeNode());
+//                G[i] += G[j - 1] * G[i - j];
+            }
+        }
+        return list;
     }
 
     public static void main(String[] args) {
-        calTable();
+
+        int a = 2;
+        a = a << 1;
+        System.out.println(a);
+
     }
 }

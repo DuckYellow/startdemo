@@ -1,4 +1,4 @@
-package com.example.startdemo.thread;
+package com.example.startdemo.多线程并发.thread;
 
 import java.util.concurrent.*;
 
@@ -27,22 +27,30 @@ public class ThreadPoolTest {
     }
 
     public static void main(String[] args) {
-//        testContinue();
-//        testContinue2();
-//        testBreak();
 
-        ExecutorService exec = new ThreadPoolExecutor(0, 5,
-                60L, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(15));
 
-        AtomTest at = new AtomTest();
-        exec.execute(at);
-        while (true) {
-            int val = at.getVal();
-            if (val % 2 != 0) {
-                System.out.println(val);
-                System.exit(0);
+    }
+
+    public static void FutureTest() {
+        //1
+        CompletableFuture<String> bookFuture = CompletableFuture.supplyAsync(() -> {
+            System.out.println("000000000");
+            return "xanyi000001";
+        });
+
+        //2
+        CompletableFuture<String> tableFuture = CompletableFuture.supplyAsync(() -> {
+            System.out.println("沉睡5秒");
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }
+            return "xanyi111110";
+        });
+
+        //CompletableFuture.allOf(bookFuture, tableFuture).join();
+        CompletableFuture.anyOf(bookFuture, tableFuture).join();
     }
 
 
@@ -60,10 +68,10 @@ public class ThreadPoolTest {
 
     public static void testContinue2() {
         retry:
-        for(int i = 0; i < 3; i++) {
-            for(int j = 0; j < 5; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 5; j++) {
                 System.out.print(j + ", ");
-                if(j == 3) {
+                if (j == 3) {
                     continue retry;
                 }
             }
