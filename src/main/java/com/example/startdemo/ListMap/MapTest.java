@@ -1,9 +1,11 @@
 package com.example.startdemo.ListMap;
 
 import com.google.gson.Gson;
-import lombok.Data;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -22,7 +24,6 @@ public class MapTest {
         System.out.println(student.hashCode());
         System.out.println(map.get(student));
     }
-
 
     static class Student {
         private Integer id;
@@ -77,6 +78,12 @@ public class MapTest {
         hashMap.put("c", 0);
         System.out.println(gson.toJson(hashMap));
 
+        ConcurrentHashMap<String, Integer> concurrentHashMap = new ConcurrentHashMap<>();
+        concurrentHashMap.put("b", 0);
+        concurrentHashMap.put("a", 0);
+        concurrentHashMap.put("c", 0);
+        System.out.println(gson.toJson(concurrentHashMap));
+
         ConcurrentSkipListMap<String, Integer> skipListMap = new ConcurrentSkipListMap();
         skipListMap.put("b", 0);
         skipListMap.put("a", 0);
@@ -88,7 +95,6 @@ public class MapTest {
         treeMap.put("key_2", 2);
         treeMap.put("key_3", 3);
         System.out.println(gson.toJson(treeMap));
-
 
         LinkedHashMap<String, Integer> linkedHashMap = new LinkedHashMap();
         linkedHashMap.put("b", 0);

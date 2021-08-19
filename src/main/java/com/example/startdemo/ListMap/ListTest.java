@@ -1,18 +1,21 @@
 package com.example.startdemo.ListMap;
 
-import com.google.common.base.Joiner;
+import lombok.Data;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ListTest {
 
     public static void main(String[] args) {
-        testB();
-//        Set<Long> a = new HashSet<>(new ArrayList<>());
-//        if(a.contains(null)){
-//            System.out.println();
-//        }
+        List<String> list1 = new LinkedList<>();
+        list1.add("1");
+        list1.add("2");
+        list1.add("3");
+        list1.remove(2);
+        System.out.println(list1.toString());
+
     }
 
     private static void sort() {
@@ -60,17 +63,18 @@ public class ListTest {
         list.add(2);
         list.add(3);
         list.add(4);
-        list=list.subList(0,2);
+        list = list.subList(0, 2);
 
         for (Integer integer : list) {
             System.out.println(integer);
         }
 
-
     }
 
+    @Data
     public static class Student {
         private Integer id;
+
         private String name;
 
         Student() {
@@ -92,5 +96,11 @@ public class ListTest {
         public void setName(String name) {
             this.name = name;
         }
+    }
+
+    @Data
+    public static class StudentSub extends Student {
+        private Integer sex;
+
     }
 }
