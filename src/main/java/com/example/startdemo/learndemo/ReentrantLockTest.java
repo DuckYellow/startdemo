@@ -16,6 +16,7 @@ public class ReentrantLockTest {
         try {
             //加锁
             lock.lock();
+            lock.tryLock();
             //模拟业务处理用时
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {

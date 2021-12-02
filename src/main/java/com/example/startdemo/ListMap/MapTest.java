@@ -14,15 +14,16 @@ public class MapTest {
     private static Gson gson = new Gson();
 
     public static void main(String[] args) {
-        Map<Student, Integer> map = new HashMap();
-        Student student = new Student();
-        student.setId(1);
-        System.out.println(student.hashCode());
+        HashMap<Integer, Integer> map = new HashMap();
+        Integer key1 = 100;
+        Integer key2 = 200;
+        map.put(key1, 1);
+        map.put(key2, 2);
 
-        map.put(student, 1);
-        student.setId(2);
-        System.out.println(student.hashCode());
-        System.out.println(map.get(student));
+        int n = map.size();
+        int a = (n - 1) & key2.hashCode();
+        System.out.println(a);
+        System.out.println(map.get(key1));
     }
 
     static class Student {
@@ -82,6 +83,7 @@ public class MapTest {
         concurrentHashMap.put("b", 0);
         concurrentHashMap.put("a", 0);
         concurrentHashMap.put("c", 0);
+        concurrentHashMap.get("a");
         System.out.println(gson.toJson(concurrentHashMap));
 
         ConcurrentSkipListMap<String, Integer> skipListMap = new ConcurrentSkipListMap();

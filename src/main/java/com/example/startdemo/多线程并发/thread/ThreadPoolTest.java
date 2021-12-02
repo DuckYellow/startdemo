@@ -6,6 +6,13 @@ import java.util.concurrent.*;
  * @author blithe
  */
 public class ThreadPoolTest {
+    private static final ThreadPoolExecutor COMPLETABLE_FUTURE_THREAD_POOL =
+            new ThreadPoolExecutor(5,
+                    5,
+                    1,
+                    TimeUnit.MINUTES,
+                    new ArrayBlockingQueue<>(25), new ThreadPoolExecutor.CallerRunsPolicy());
+
     static class AtomTest implements Runnable {
         private volatile int i = 0;
 
@@ -27,7 +34,7 @@ public class ThreadPoolTest {
     }
 
     public static void main(String[] args) {
-
+        COMPLETABLE_FUTURE_THREAD_POOL.submit(()->testContinue());
 
     }
 
