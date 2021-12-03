@@ -286,35 +286,35 @@ public class Solution3 {
         return num;
     }
 
-    public static int eraseOverlapIntervals(int[][] intervals) {
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            public int compare(int[] person1, int[] person2) {
-                if (person1[0] != person2[0] && person1[0] > person2[0]) {
-                    return 1;
-                } else if (person1[0] == person2[0]
-                        && person1[1] != person2[1]
-                        && person1[1] > person2[1]) {
-                    return 1;
-                }
-                return -1;
-            }
-        });
-
-        int num = 0;
-        long max = Long.MAX_VALUE;
-        for (int i = 0; i < intervals.length; i++) {
-            if (max > points[i][1]) {
-                max = points[i][1];
-            }
-            if (max >= points[i][0]) {
-                continue;
-            }
-            num++;
-            max = points[i][1];
-        }
-        return num;
-
-    }
+//    public static int eraseOverlapIntervals(int[][] intervals) {
+//        Arrays.sort(intervals, new Comparator<int[]>() {
+//            public int compare(int[] person1, int[] person2) {
+//                if (person1[0] != person2[0] && person1[0] > person2[0]) {
+//                    return 1;
+//                } else if (person1[0] == person2[0]
+//                        && person1[1] != person2[1]
+//                        && person1[1] > person2[1]) {
+//                    return 1;
+//                }
+//                return -1;
+//            }
+//        });
+//
+//        int num = 0;
+//        long max = Long.MAX_VALUE;
+//        for (int i = 0; i < intervals.length; i++) {
+//            if (max > points[i][1]) {
+//                max = points[i][1];
+//            }
+//            if (max >= points[i][0]) {
+//                continue;
+//            }
+//            num++;
+//            max = points[i][1];
+//        }
+//        return num;
+//
+//    }
 
     public static void main(String[] args) {
         int[][] array1 = {{1, 2}, {4, 5}, {1, 5}};

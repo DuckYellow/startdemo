@@ -1,18 +1,7 @@
 package com.example.startdemo.date;
 
-import com.btime.util.GsonUtil;
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.sun.image.codec.jpeg.JPEGCodec;
 import net.coobird.thumbnailator.Thumbnails;
-import sun.awt.image.JPEGImageDecoder;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +11,6 @@ import java.util.List;
  * @date 2019-12-25 19:07
  */
 public class PictureDemo {
-    private static Gson gson = GsonUtil.createGson();
     static String desktop = "/Users/xuweihang/Desktop/pic/";
     static String desktop2 = "/Users/xuweihang/Desktop/pic2/";
 

@@ -1,8 +1,6 @@
 package com.example.startdemo.date;
 
 import com.alibaba.excel.EasyExcel;
-import com.btime.util.DateUtil;
-import com.btime.util.StringUtil;
 import com.example.startdemo.date.entity.ExcelUtil;
 import com.example.startdemo.date.entity.ReviewDO;
 import com.example.startdemo.date.entity.WorkflowExcelDO;
@@ -54,12 +52,10 @@ public class PurchaseOrderDeal {
                 if (index == 0) {
                     excelDO.setPurchaseOrderNo(reviewDO.getBussinessId());
                     excelDO.setCreateUid(reviewDO.getCreator());
-                    excelDO.setCreateTime(DateUtil.getDateTimeString(reviewDO.getCreateTime()));
                 }
                 process.setNode(String.valueOf(i));
                 process.setOptUid(Long.valueOf(reviewDO.getCreator()));
                 process.setPass(reviewDO.getPassFlag());
-                process.setDate(DateUtil.getDateTimeString(reviewDO.getCreateTime()));
                 //直接拒绝 结束当前审批流
                 switch (index) {
                     case 0:
@@ -116,7 +112,6 @@ public class PurchaseOrderDeal {
 
             reviewDO.setRemark(list.get(4));
             reviewDO.setCreator(list.get(5));
-            reviewDO.setCreateTime(DateUtil.parseDate(list.get(6)));
 
             if (!dateMap.containsKey(reviewDO.getBussinessId())) {
                 dateMap.put(reviewDO.getBussinessId(), new ArrayList<>());

@@ -1,12 +1,7 @@
 package com.example.startdemo.leetcode;
 
-import com.btime.util.StringUtil;
-import lombok.val;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MediumSolution {
     public static class ListNode {
