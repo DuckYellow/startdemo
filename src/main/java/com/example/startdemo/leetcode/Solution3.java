@@ -1,7 +1,6 @@
 package com.example.startdemo.leetcode;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author xuweihang@qbb.com
@@ -316,10 +315,84 @@ public class Solution3 {
 //
 //    }
 
+    public static int trap2(int[] height) {
+        //
+        if (height.length <= 2) {
+            return 0;
+        }
+        //第二个如果比第一个高，就从第二个开始接雨水
+        if (height[1] >= height[0]) {
+            int[] height2 = new int[height.length - 1];
+            System.arraycopy(height, 1, height2, 0, height.length - 1);
+            return trap2(height2);
+        } else {
+            //计算能接多少水
+            int topIndex = findNextTop(height);
+            int num = 0;
+            if (height[topIndex] >= height[0]) {
+                num = topIndex - 1;
+            }
+            if (height[0] - 1 > height[1]) {
+                height[0] = height[0] - 1;
+                return num + trap2(height);
+            } else {
+                int[] height2 = new int[height.length - 1];
+                System.arraycopy(height, 1, height2, 0, height.length - 1);
+                return num + trap2(height2);
+            }
+
+        }
+    }
+
+    //找到下一个高坡
+    private static int findNextTop(int[] height) {
+        for (int i = 1; i < height.length; i++) {
+            if (i == height.length - 1) {
+                return i;
+            }
+            if (height[i] >= height[0]) {
+                return i;
+            }
+        }
+        return height.length - 1;
+    }
+
+    public static int trap(int[] height) {
+        //
+        Map<Integer, List<Integer>> heightMap = new HashMap<>();
+        for (int i = 0; i < height.length; i++) {
+            List<Integer> list = heightMap.getOrDefault(height[i], new ArrayList<>());
+            list.add(i);
+            heightMap.put(height[i], list);
+        }
+        List<Integer> keyList = new ArrayList<>(heightMap.keySet());
+        Collections.sort(keyList);
+        int num = 0;
+        List<Integer> has = new ArrayList<>();
+        for (int i = keyList.size() - 1; i >= 0; i--) {
+            int height1 = keyList.get(i);
+            int height2 = 0;
+            if (i != 0) {
+                height2 = keyList.get(i - 1);
+            }
+
+            List<Integer> indexList = heightMap.get(height1);
+            has.addAll(indexList);
+            if (has.size() <= 1) {
+                continue;
+            }
+            Collections.sort(has);
+            int result = has.get(has.size() - 1) - has.get(0) + 1 - has.size();
+            num += result * (height1 - height2);
+        }
+        return num;
+    }
+
     public static void main(String[] args) {
         int[][] array1 = {{1, 2}, {4, 5}, {1, 5}};
-        int[] array2 = new int[]{4, 4, 1, 5, 1};
-        System.out.println(findMinArrowShots(array1));
+        int[] array2 = new int[]{
+        };
+        System.out.println(trap(array2));
         System.out.println();
 
     }
