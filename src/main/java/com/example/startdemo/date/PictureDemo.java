@@ -2,6 +2,8 @@ package com.example.startdemo.date;
 
 import com.google.gson.Gson;
 import net.coobird.thumbnailator.Thumbnails;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +17,11 @@ public class PictureDemo {
     static String desktop2 = "/Users/xuweihang/Desktop/pic2/";
 
     public static void main(String[] args) throws Exception {
-        dealPic();
+        String num="1.236E7";
+//        Double double1=Double.valueOf(num);
+        BigDecimal bigDecimal=new BigDecimal(num);
+        System.out.println(bigDecimal.toPlainString());
+//        dealPic();
     }
 
     private static void dealPic() throws Exception {
